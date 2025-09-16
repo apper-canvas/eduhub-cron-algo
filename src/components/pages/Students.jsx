@@ -203,7 +203,7 @@ const Students = () => {
                           {student.status}
                         </Badge>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+<td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                         <div className="flex items-center space-x-2">
                           <Button
                             size="sm"
@@ -211,6 +211,14 @@ const Students = () => {
                             onClick={() => handleEditStudent(student)}
                           >
                             <ApperIcon name="Edit" className="w-4 h-4" />
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            onClick={() => window.open(`/documents?studentId=${student.Id}`, '_blank')}
+                            title="View Documents"
+                          >
+                            <ApperIcon name="FileText" className="w-4 h-4" />
                           </Button>
                           <Button
                             size="sm"

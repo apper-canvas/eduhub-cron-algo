@@ -8,6 +8,7 @@ import Courses from "@/components/pages/Courses";
 import Grades from "@/components/pages/Grades";
 import Schedule from "@/components/pages/Schedule";
 import Reports from "@/components/pages/Reports";
+import Documents from "@/components/pages/Documents";
 
 function App() {
   return (
@@ -21,7 +22,8 @@ function App() {
             <Route path="courses" element={<Courses />} />
             <Route path="grades" element={<Grades />} />
             <Route path="schedule" element={<Schedule />} />
-            <Route path="reports" element={<Reports />} />
+<Route path="reports" element={<Reports />} />
+            <Route path="documents" element={<Documents />} />
           </Route>
         </Routes>
         

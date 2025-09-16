@@ -6,12 +6,13 @@ import { cn } from "@/utils/cn";
 const Sidebar = () => {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
-  const navigationItems = [
+const navigationItems = [
     { name: "Dashboard", href: "/dashboard", icon: "LayoutDashboard" },
     { name: "Students", href: "/students", icon: "Users" },
     { name: "Courses", href: "/courses", icon: "BookOpen" },
     { name: "Grades", href: "/grades", icon: "GraduationCap" },
     { name: "Schedule", href: "/schedule", icon: "Calendar" },
+    { name: "Documents", href: "/documents", icon: "FileText" },
     { name: "Reports", href: "/reports", icon: "BarChart3" },
   ];
 
