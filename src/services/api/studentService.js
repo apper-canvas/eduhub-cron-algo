@@ -69,9 +69,6 @@ async search(query) {
         (student.gender && student.gender.toLowerCase().includes(searchTerm)) ||
         hobbiesString.includes(searchTerm)
       );
-    });
+});
   }
 };
-const searchTerm = query.toLowerCase();
-    return students.filter(student => {
-      const hobbiesString = Array.isArray(student.hobbies) ? student.hobbies.join(' ').toLowerCase() : '';
