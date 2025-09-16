@@ -47,10 +47,13 @@ const Courses = () => {
       setFilteredCourses(courses);
     } else {
       const filtered = courses.filter(course =>
-        course.title.toLowerCase().includes(value.toLowerCase()) ||
+course.title.toLowerCase().includes(value.toLowerCase()) ||
         course.courseCode.toLowerCase().includes(value.toLowerCase()) ||
         course.department.toLowerCase().includes(value.toLowerCase()) ||
-        course.instructor.toLowerCase().includes(value.toLowerCase())
+        course.instructor.toLowerCase().includes(value.toLowerCase()) ||
+        course.phone?.toLowerCase().includes(value.toLowerCase()) ||
+        course.email?.toLowerCase().includes(value.toLowerCase()) ||
+        course.website?.toLowerCase().includes(value.toLowerCase())
       );
       setFilteredCourses(filtered);
     }

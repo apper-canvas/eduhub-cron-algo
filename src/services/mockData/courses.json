@@ -13,8 +13,12 @@
     "schedule": {
       "days": ["Monday", "Wednesday", "Friday"],
       "time": "10:00 AM - 11:00 AM"
-    },
-    "room": "CS Building 201"
+},
+    "room": "CS Building 201",
+    "phone": "(555) 123-4567",
+    "email": "cs201@university.edu",
+    "website": "https://cs.university.edu/courses/201",
+    "amount": 1200.00
   },
   {
     "Id": 2,
@@ -32,7 +36,7 @@
       "time": "2:00 PM - 3:30 PM"
     },
     "room": "Business Center 105"
-  },
+},
   {
     "Id": 3,
     "courseCode": "ENG101",
@@ -48,7 +52,11 @@
       "days": ["Monday", "Wednesday", "Friday"],
       "time": "9:00 AM - 10:00 AM"
     },
-    "room": "Liberal Arts 312"
+"room": "Liberal Arts 312",
+    "phone": "(555) 234-5678",
+    "email": "eng101@university.edu",
+    "website": "https://english.university.edu/courses/101",
+    "amount": 800.00
   },
   {
     "Id": 4,
@@ -65,7 +73,11 @@
       "days": ["Monday", "Wednesday", "Friday"],
       "time": "11:00 AM - 12:00 PM"
     },
-    "room": "Science Building 145"
+"room": "Science Building 145",
+    "phone": "(555) 345-6789",
+    "email": "math150@university.edu",
+    "website": "https://math.university.edu/courses/150",
+    "amount": 900.00
   },
   {
     "Id": 5,
@@ -82,7 +94,11 @@
       "days": ["Tuesday", "Thursday"],
       "time": "10:00 AM - 11:30 AM"
     },
-    "room": "Social Sciences 201"
+"room": "Social Sciences 201",
+    "phone": "(555) 456-7890",
+    "email": "psyc101@university.edu",
+    "website": "https://psychology.university.edu/courses/101",
+    "amount": 750.00
   },
   {
     "Id": 6,
@@ -99,7 +115,11 @@
       "days": ["Monday", "Wednesday", "Friday"],
       "time": "1:00 PM - 2:00 PM"
     },
-    "room": "Chemistry Lab 301"
+"room": "Chemistry Lab 301",
+    "phone": "(555) 567-8901",
+    "email": "chem201@university.edu",
+    "website": "https://chemistry.university.edu/courses/201",
+    "amount": 1500.00
   },
   {
     "Id": 7,
@@ -116,7 +136,11 @@
       "days": ["Tuesday", "Thursday"],
       "time": "3:30 PM - 5:00 PM"
     },
-    "room": "Liberal Arts 150"
+"room": "Liberal Arts 150",
+    "phone": "(555) 678-9012",
+    "email": "hist101@university.edu",
+    "website": "https://history.university.edu/courses/101",
+    "amount": 650.00
   },
   {
     "Id": 8,
@@ -133,6 +157,10 @@
       "days": ["Monday", "Wednesday", "Friday"],
       "time": "2:00 PM - 3:00 PM"
     },
-    "room": "Science Building 210"
+"room": "Science Building 210",
+    "phone": "(555) 789-0123",
+    "email": "bio101@university.edu",
+    "website": "https://biology.university.edu/courses/101",
+    "amount": 1100.00
   }
 ]

@@ -22,10 +22,14 @@ export const courseService = {
   async create(courseData) {
     await delay(500);
     const newId = Math.max(...courses.map(c => c.Id)) + 1;
-    const newCourse = {
+const newCourse = {
       ...courseData,
       Id: newId,
-      enrolled: 0
+      enrolled: 0,
+      credits: parseInt(courseData.credits),
+      year: parseInt(courseData.year),
+      capacity: parseInt(courseData.capacity),
+      amount: courseData.amount ? parseFloat(courseData.amount) : null
     };
     courses.push(newCourse);
     return { ...newCourse };
@@ -54,11 +58,14 @@ export const courseService = {
   async search(query) {
     await delay(250);
     const searchTerm = query.toLowerCase();
-    return courses.filter(course =>
+return courses.filter(course =>
       course.title.toLowerCase().includes(searchTerm) ||
       course.courseCode.toLowerCase().includes(searchTerm) ||
       course.department.toLowerCase().includes(searchTerm) ||
-      course.instructor.toLowerCase().includes(searchTerm)
+      course.instructor.toLowerCase().includes(searchTerm) ||
+      course.phone?.toLowerCase().includes(searchTerm) ||
+      course.email?.toLowerCase().includes(searchTerm) ||
+      course.website?.toLowerCase().includes(searchTerm)
     );
   }
 };

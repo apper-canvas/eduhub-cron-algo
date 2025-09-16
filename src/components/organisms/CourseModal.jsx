@@ -3,10 +3,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import Button from "@/components/atoms/Button";
 import Input from "@/components/atoms/Input";
 import Select from "@/components/atoms/Select";
+import CurrencyInput from "@/components/atoms/CurrencyInput";
 import ApperIcon from "@/components/ApperIcon";
 
 const CourseModal = ({ isOpen, onClose, onSave, course }) => {
-  const [formData, setFormData] = useState({
+const [formData, setFormData] = useState({
     courseCode: "",
     title: "",
     credits: "",
@@ -17,13 +18,17 @@ const CourseModal = ({ isOpen, onClose, onSave, course }) => {
     instructor: "",
     room: "",
     days: [],
-    time: ""
+    time: "",
+    phone: "",
+    email: "",
+    website: "",
+    amount: ""
   });
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
     if (course) {
-      setFormData({
+setFormData({
         courseCode: course.courseCode || "",
         title: course.title || "",
         credits: course.credits.toString() || "",
@@ -34,10 +39,14 @@ const CourseModal = ({ isOpen, onClose, onSave, course }) => {
         instructor: course.instructor || "",
         room: course.room || "",
         days: course.schedule?.days || [],
-        time: course.schedule?.time || ""
+        time: course.schedule?.time || "",
+        phone: course.phone || "",
+        email: course.email || "",
+        website: course.website || "",
+        amount: course.amount ? course.amount.toString() : ""
       });
     } else {
-      setFormData({
+setFormData({
         courseCode: "",
         title: "",
         credits: "",
@@ -48,7 +57,11 @@ const CourseModal = ({ isOpen, onClose, onSave, course }) => {
         instructor: "",
         room: "",
         days: [],
-        time: ""
+        time: "",
+        phone: "",
+        email: "",
+        website: "",
+        amount: ""
       });
     }
     setErrors({});
@@ -74,7 +87,7 @@ const CourseModal = ({ isOpen, onClose, onSave, course }) => {
     }
   };
 
-  const validateForm = () => {
+const validateForm = () => {
     const newErrors = {};
     
     if (!formData.courseCode.trim()) newErrors.courseCode = "Course code is required";
@@ -85,6 +98,11 @@ const CourseModal = ({ isOpen, onClose, onSave, course }) => {
     if (!formData.instructor.trim()) newErrors.instructor = "Instructor is required";
     if (formData.days.length === 0) newErrors.days = "At least one day must be selected";
     if (!formData.time.trim()) newErrors.time = "Time is required";
+    if (!formData.phone.trim()) newErrors.phone = "Phone is required";
+    if (!formData.email.trim()) newErrors.email = "Email is required";
+    if (formData.email && !/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = "Valid email required";
+    if (formData.website && !/^https?:\/\/.+\..+/.test(formData.website)) newErrors.website = "Valid website URL required";
+    if (formData.amount && isNaN(formData.amount)) newErrors.amount = "Valid amount required";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -136,7 +154,7 @@ const CourseModal = ({ isOpen, onClose, onSave, course }) => {
           </div>
 
           <form onSubmit={handleSubmit} className="p-6 space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <Input
                 label="Course Code"
                 name="courseCode"
@@ -157,6 +175,45 @@ const CourseModal = ({ isOpen, onClose, onSave, course }) => {
               />
             </div>
 
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <Input
+                label="Phone"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                error={errors.phone}
+                placeholder="e.g., (555) 123-4567"
+              />
+              <Input
+                label="Email"
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+                error={errors.email}
+                placeholder="e.g., course@university.edu"
+              />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <Input
+                label="Website (Optional)"
+                name="website"
+                value={formData.website}
+                onChange={handleChange}
+                error={errors.website}
+                placeholder="e.g., https://course-website.com"
+              />
+              <CurrencyInput
+                label="Course Amount (Optional)"
+                name="amount"
+                value={formData.amount}
+                onChange={handleChange}
+                error={errors.amount}
+                placeholder="0.00"
+              />
+            </div>
+
             <Input
               label="Course Title"
               name="title"
@@ -166,7 +223,7 @@ const CourseModal = ({ isOpen, onClose, onSave, course }) => {
               placeholder="e.g., Data Structures and Algorithms"
             />
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <Input
                 label="Department"
                 name="department"
