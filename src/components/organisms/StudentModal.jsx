@@ -3,10 +3,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import Button from "@/components/atoms/Button";
 import Input from "@/components/atoms/Input";
 import Select from "@/components/atoms/Select";
+import RadioGroup from "@/components/atoms/RadioGroup";
+import StarRating from "@/components/atoms/StarRating";
+import CurrencyInput from "@/components/atoms/CurrencyInput";
+import CheckboxGroup from "@/components/atoms/CheckboxGroup";
 import ApperIcon from "@/components/ApperIcon";
-
 const StudentModal = ({ isOpen, onClose, onSave, student }) => {
-  const [formData, setFormData] = useState({
+const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     email: "",
@@ -14,12 +17,16 @@ const StudentModal = ({ isOpen, onClose, onSave, student }) => {
     studentId: "",
     major: "",
     year: "",
-    status: "Active"
+    status: "Active",
+    gender: "",
+    rating: 0,
+    amountPaid: "",
+    hobbies: []
   });
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
-    if (student) {
+if (student) {
       setFormData({
         firstName: student.firstName || "",
         lastName: student.lastName || "",
@@ -28,7 +35,11 @@ const StudentModal = ({ isOpen, onClose, onSave, student }) => {
         studentId: student.studentId || "",
         major: student.major || "",
         year: student.year || "",
-        status: student.status || "Active"
+        status: student.status || "Active",
+        gender: student.gender || "",
+        rating: student.rating || 0,
+        amountPaid: student.amountPaid || "",
+        hobbies: student.hobbies || []
       });
     } else {
       setFormData({
@@ -39,13 +50,17 @@ const StudentModal = ({ isOpen, onClose, onSave, student }) => {
         studentId: "",
         major: "",
         year: "",
-        status: "Active"
+        status: "Active",
+        gender: "",
+        rating: 0,
+        amountPaid: "",
+        hobbies: []
       });
     }
     setErrors({});
   }, [student, isOpen]);
 
-  const handleChange = (e) => {
+const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
     if (errors[name]) {
@@ -53,7 +68,7 @@ const StudentModal = ({ isOpen, onClose, onSave, student }) => {
     }
   };
 
-  const validateForm = () => {
+const validateForm = () => {
     const newErrors = {};
     
     if (!formData.firstName.trim()) newErrors.firstName = "First name is required";
@@ -66,10 +81,38 @@ const StudentModal = ({ isOpen, onClose, onSave, student }) => {
     if (!formData.studentId.trim()) newErrors.studentId = "Student ID is required";
     if (!formData.major.trim()) newErrors.major = "Major is required";
     if (!formData.year) newErrors.year = "Year is required";
+    if (!formData.gender.trim()) newErrors.gender = "Gender is required";
+    if (formData.amountPaid && isNaN(parseFloat(formData.amountPaid))) {
+      newErrors.amountPaid = "Amount must be a valid number";
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
+
+  const genderOptions = [
+    { value: "Male", label: "Male" },
+    { value: "Female", label: "Female" },
+    { value: "Other", label: "Other" }
+  ];
+
+  const hobbiesOptions = [
+    { value: "Reading", label: "Reading" },
+    { value: "Sports", label: "Sports" },
+    { value: "Music", label: "Music" },
+    { value: "Art", label: "Art" },
+    { value: "Programming", label: "Programming" },
+    { value: "Photography", label: "Photography" },
+    { value: "Travel", label: "Travel" },
+    { value: "Cooking", label: "Cooking" },
+    { value: "Gaming", label: "Gaming" },
+    { value: "Writing", label: "Writing" },
+    { value: "Technology", label: "Technology" },
+    { value: "Science", label: "Science" },
+    { value: "Business", label: "Business" },
+    { value: "Fitness", label: "Fitness" },
+    { value: "Gardening", label: "Gardening" }
+  ];
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -103,7 +146,7 @@ const StudentModal = ({ isOpen, onClose, onSave, student }) => {
           </div>
 
           <form onSubmit={handleSubmit} className="p-6 space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <Input
                 label="First Name"
                 name="firstName"
@@ -171,15 +214,51 @@ const StudentModal = ({ isOpen, onClose, onSave, student }) => {
               </Select>
             </div>
 
-            <Select
-              label="Status"
-              name="status"
-              value={formData.status}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <Select
+                label="Status"
+                name="status"
+                value={formData.status}
+                onChange={handleChange}
+              >
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+              </Select>
+              <RadioGroup
+                label="Gender"
+                name="gender"
+                value={formData.gender}
+                onChange={handleChange}
+                options={genderOptions}
+                error={errors.gender}
+              />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <StarRating
+                label="Rating"
+                name="rating"
+                value={formData.rating}
+                onChange={handleChange}
+                error={errors.rating}
+              />
+              <CurrencyInput
+                label="Amount Paid"
+                name="amountPaid"
+                value={formData.amountPaid}
+                onChange={handleChange}
+                error={errors.amountPaid}
+              />
+            </div>
+
+            <CheckboxGroup
+              label="Hobbies"
+              name="hobbies"
+              value={formData.hobbies}
               onChange={handleChange}
-            >
-              <option value="Active">Active</option>
-              <option value="Inactive">Inactive</option>
-            </Select>
+              options={hobbiesOptions}
+              error={errors.hobbies}
+            />
 
             <div className="flex justify-end space-x-3 pt-6 border-t border-gray-200">
               <Button variant="outline" onClick={onClose}>

@@ -1,5 +1,5 @@
 [
-  {
+{
     "Id": 1,
     "firstName": "Emma",
     "lastName": "Johnson",
@@ -10,9 +10,13 @@
     "major": "Computer Science",
     "year": "Junior",
     "status": "Active",
-    "gpa": 3.75
+    "gpa": 3.75,
+    "gender": "Female",
+    "rating": 4,
+    "amountPaid": "5250.00",
+    "hobbies": ["Reading", "Programming"]
   },
-  {
+{
     "Id": 2,
     "firstName": "Michael",
     "lastName": "Smith",
@@ -23,9 +27,13 @@
     "major": "Business Administration",
     "year": "Senior",
     "status": "Active",
-    "gpa": 3.45
+    "gpa": 3.45,
+    "gender": "Male",
+    "rating": 5,
+    "amountPaid": "4750.00",
+    "hobbies": ["Sports", "Music"]
   },
-  {
+{
     "Id": 3,
     "firstName": "Sarah",
     "lastName": "Williams",
@@ -36,9 +44,13 @@
     "major": "Engineering",
     "year": "Sophomore",
     "status": "Active",
-    "gpa": 3.92
+    "gpa": 3.92,
+    "gender": "Female",
+    "rating": 3,
+    "amountPaid": "6200.00",
+    "hobbies": ["Photography", "Travel", "Art"]
   },
-  {
+{
     "Id": 4,
     "firstName": "David",
     "lastName": "Brown",
@@ -49,9 +61,13 @@
     "major": "Psychology",
     "year": "Freshman",
     "status": "Active",
-    "gpa": 3.28
+    "gpa": 3.28,
+    "gender": "Male",
+    "rating": 2,
+    "amountPaid": "3850.00",
+    "hobbies": ["Gaming", "Technology"]
   },
-  {
+{
     "Id": 5,
     "firstName": "Jessica",
     "lastName": "Davis",
@@ -62,9 +78,13 @@
     "major": "Mathematics",
     "year": "Junior",
     "status": "Active",
-    "gpa": 3.88
+    "gpa": 3.88,
+    "gender": "Female",
+    "rating": 4,
+    "amountPaid": "5100.00",
+    "hobbies": ["Reading", "Cooking", "Gardening"]
   },
-  {
+{
     "Id": 6,
     "firstName": "James",
     "lastName": "Wilson",
@@ -75,9 +95,13 @@
     "major": "Biology",
     "year": "Senior",
     "status": "Active",
-    "gpa": 3.67
+    "gpa": 3.67,
+    "gender": "Male",
+    "rating": 5,
+    "amountPaid": "4900.00",
+    "hobbies": ["Sports", "Fitness"]
   },
-  {
+{
     "Id": 7,
     "firstName": "Ashley",
     "lastName": "Martinez",
@@ -88,9 +112,13 @@
     "major": "Art History",
     "year": "Sophomore",
     "status": "Inactive",
-    "gpa": 3.15
+    "gpa": 3.15,
+    "gender": "Female",
+    "rating": 1,
+    "amountPaid": "3200.00",
+    "hobbies": ["Art", "Music", "Writing"]
   },
-  {
+{
     "Id": 8,
     "firstName": "Christopher",
     "lastName": "Anderson",
@@ -101,9 +129,13 @@
     "major": "Economics",
     "year": "Junior",
     "status": "Active",
-    "gpa": 3.54
+    "gpa": 3.54,
+    "gender": "Male",
+    "rating": 3,
+    "amountPaid": "4650.00",
+    "hobbies": ["Business", "Investing"]
   },
-  {
+{
     "Id": 9,
     "firstName": "Amanda",
     "lastName": "Taylor",
@@ -114,9 +146,13 @@
     "major": "Chemistry",
     "year": "Senior",
     "status": "Active",
-    "gpa": 3.81
+    "gpa": 3.81,
+    "gender": "Female",
+    "rating": 4,
+    "amountPaid": "5400.00",
+    "hobbies": ["Science", "Research", "Hiking"]
   },
-  {
+{
     "Id": 10,
     "firstName": "Ryan",
     "lastName": "Thomas",
@@ -127,6 +163,10 @@
     "major": "English Literature",
     "year": "Freshman",
     "status": "Active",
-    "gpa": 3.33
+    "gpa": 3.33,
+    "gender": "Male",
+    "rating": 2,
+    "amountPaid": "3950.00",
+    "hobbies": ["Writing", "Reading", "Theater"]
   }
 ]

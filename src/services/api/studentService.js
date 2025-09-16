@@ -1,5 +1,4 @@
 import studentsData from "@/services/mockData/students.json";
-
 let students = [...studentsData];
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
@@ -21,12 +20,16 @@ export const studentService = {
 
   async create(studentData) {
     await delay(500);
-    const newId = Math.max(...students.map(s => s.Id)) + 1;
+const newId = Math.max(...students.map(s => s.Id)) + 1;
     const newStudent = {
       ...studentData,
       Id: newId,
       enrollmentDate: new Date().toISOString().split("T")[0],
-      gpa: 0.0
+      gpa: 0.0,
+      gender: studentData.gender || "",
+      rating: studentData.rating || 0,
+      amountPaid: studentData.amountPaid || "0.00",
+      hobbies: studentData.hobbies || []
     };
     students.push(newStudent);
     return { ...newStudent };
@@ -52,15 +55,23 @@ export const studentService = {
     return { ...deletedStudent };
   },
 
-  async search(query) {
+async search(query) {
     await delay(250);
     const searchTerm = query.toLowerCase();
-    return students.filter(student =>
-      student.firstName.toLowerCase().includes(searchTerm) ||
-      student.lastName.toLowerCase().includes(searchTerm) ||
-      student.email.toLowerCase().includes(searchTerm) ||
-      student.studentId.toLowerCase().includes(searchTerm) ||
-      student.major.toLowerCase().includes(searchTerm)
-    );
+    return students.filter(student => {
+      const hobbiesString = Array.isArray(student.hobbies) ? student.hobbies.join(' ').toLowerCase() : '';
+      return (
+        student.firstName.toLowerCase().includes(searchTerm) ||
+        student.lastName.toLowerCase().includes(searchTerm) ||
+        student.email.toLowerCase().includes(searchTerm) ||
+        student.studentId.toLowerCase().includes(searchTerm) ||
+        student.major.toLowerCase().includes(searchTerm) ||
+        (student.gender && student.gender.toLowerCase().includes(searchTerm)) ||
+        hobbiesString.includes(searchTerm)
+      );
+    });
   }
 };
+const searchTerm = query.toLowerCase();
+    return students.filter(student => {
+      const hobbiesString = Array.isArray(student.hobbies) ? student.hobbies.join(' ').toLowerCase() : '';

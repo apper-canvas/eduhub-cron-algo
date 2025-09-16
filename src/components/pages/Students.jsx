@@ -46,13 +46,18 @@ const Students = () => {
     if (!value.trim()) {
       setFilteredStudents(students);
     } else {
-      const filtered = students.filter(student =>
-        student.firstName.toLowerCase().includes(value.toLowerCase()) ||
-        student.lastName.toLowerCase().includes(value.toLowerCase()) ||
-        student.email.toLowerCase().includes(value.toLowerCase()) ||
-        student.studentId.toLowerCase().includes(value.toLowerCase()) ||
-        student.major.toLowerCase().includes(value.toLowerCase())
-      );
+const filtered = students.filter(student => {
+        const hobbiesString = Array.isArray(student.hobbies) ? student.hobbies.join(' ').toLowerCase() : '';
+        return (
+          student.firstName.toLowerCase().includes(value.toLowerCase()) ||
+          student.lastName.toLowerCase().includes(value.toLowerCase()) ||
+          student.email.toLowerCase().includes(value.toLowerCase()) ||
+          student.studentId.toLowerCase().includes(value.toLowerCase()) ||
+          student.major.toLowerCase().includes(value.toLowerCase()) ||
+          (student.gender && student.gender.toLowerCase().includes(value.toLowerCase())) ||
+          hobbiesString.includes(value.toLowerCase())
+        );
+      });
       setFilteredStudents(filtered);
     }
   };
@@ -136,7 +141,7 @@ const Students = () => {
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-200 table-hover">
                 <thead className="bg-gray-50">
-                  <tr>
+<tr>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Student
                     </th>
@@ -153,6 +158,15 @@ const Students = () => {
                       GPA
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Gender
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Rating
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Amount Paid
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Status
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -161,7 +175,7 @@ const Students = () => {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {paginatedStudents.map((student, index) => (
+{paginatedStudents.map((student, index) => (
                     <motion.tr
                       key={student.Id}
                       initial={{ opacity: 0, y: 10 }}
@@ -183,6 +197,11 @@ const Students = () => {
                             <div className="text-sm text-gray-500">
                               {student.email}
                             </div>
+                            <div className="text-xs text-gray-400 mt-1">
+                              {Array.isArray(student.hobbies) && student.hobbies.length > 0 
+                                ? student.hobbies.slice(0, 2).join(', ') + (student.hobbies.length > 2 ? '...' : '')
+                                : 'No hobbies'}
+                            </div>
                           </div>
                         </div>
                       </td>
@@ -197,6 +216,36 @@ const Students = () => {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                         <span className="font-medium">{student.gpa}</span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {student.gender || 'N/A'}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        <div className="flex items-center">
+                          {[...Array(5)].map((_, i) => (
+                            <ApperIcon
+                              key={i}
+                              name="Star"
+                              size={14}
+                              className={`${
+                                i < (student.rating || 0) 
+                                  ? 'text-yellow-400 fill-current' 
+                                  : 'text-gray-300'
+                              }`}
+                            />
+                          ))}
+                          <span className="ml-2 text-xs text-gray-600">
+                            {student.rating || 0}/5
+                          </span>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        <span className="font-medium text-success-600">
+                          ${parseFloat(student.amountPaid || 0).toLocaleString('en-US', { 
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
+                          })}
+                        </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <Badge variant={student.status === "Active" ? "active" : "inactive"}>
