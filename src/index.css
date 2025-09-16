@@ -1,0 +1,163 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* React Toastify Styles */
+@import 'react-toastify/dist/ReactToastify.css';
+
+/* Toast Customization */
+.Toastify__toast-container {
+  width: 400px;
+}
+
+.Toastify__toast {
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.Toastify__toast--success {
+  background: linear-gradient(135deg, #059669, #047857);
+  color: white;
+}
+
+.Toastify__toast--error {
+  background: linear-gradient(135deg, #dc2626, #b91c1c);
+  color: white;
+}
+
+.Toastify__toast--warning {
+  background: linear-gradient(135deg, #d97706, #b45309);
+  color: white;
+}
+
+.Toastify__toast--info {
+  background: linear-gradient(135deg, #0284c7, #0369a1);
+  color: white;
+}
+
+.Toastify__progress-bar {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Base Styles */
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  background-color: #f8fafc;
+  color: #1e293b;
+}
+
+/* Table Styles */
+.table-hover tbody tr:hover {
+  background-color: #f8fafc;
+}
+
+/* Card Shadows */
+.card-shadow {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.card-shadow-lg {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Status Badges */
+.status-active {
+  @apply bg-success-500 text-white;
+}
+
+.status-inactive {
+  @apply bg-gray-500 text-white;
+}
+
+.status-pending {
+  @apply bg-warning-500 text-white;
+}
+
+.status-completed {
+  @apply bg-success-500 text-white;
+}
+
+.status-enrolled {
+  @apply bg-primary-600 text-white;
+}
+
+.status-dropped {
+  @apply bg-error-500 text-white;
+}
+
+/* Grade Colors */
+.grade-a {
+  @apply bg-success-500 text-white;
+}
+
+.grade-b {
+  @apply bg-blue-500 text-white;
+}
+
+.grade-c {
+  @apply bg-warning-500 text-white;
+}
+
+.grade-d {
+  @apply bg-orange-500 text-white;
+}
+
+.grade-f {
+  @apply bg-error-500 text-white;
+}
+
+/* Animation Classes */
+.fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slide-down {
+  animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

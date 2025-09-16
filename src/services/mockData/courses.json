@@ -1,0 +1,138 @@
+[
+  {
+    "Id": 1,
+    "courseCode": "CS201",
+    "title": "Data Structures and Algorithms",
+    "credits": 4,
+    "department": "Computer Science",
+    "semester": "Spring",
+    "year": 2024,
+    "capacity": 35,
+    "enrolled": 28,
+    "instructor": "Dr. Sarah Chen",
+    "schedule": {
+      "days": ["Monday", "Wednesday", "Friday"],
+      "time": "10:00 AM - 11:00 AM"
+    },
+    "room": "CS Building 201"
+  },
+  {
+    "Id": 2,
+    "courseCode": "BUS301",
+    "title": "Marketing Principles",
+    "credits": 3,
+    "department": "Business",
+    "semester": "Spring",
+    "year": 2024,
+    "capacity": 50,
+    "enrolled": 42,
+    "instructor": "Prof. Michael Roberts",
+    "schedule": {
+      "days": ["Tuesday", "Thursday"],
+      "time": "2:00 PM - 3:30 PM"
+    },
+    "room": "Business Center 105"
+  },
+  {
+    "Id": 3,
+    "courseCode": "ENG101",
+    "title": "English Composition",
+    "credits": 3,
+    "department": "English",
+    "semester": "Spring",
+    "year": 2024,
+    "capacity": 25,
+    "enrolled": 23,
+    "instructor": "Dr. Jennifer Adams",
+    "schedule": {
+      "days": ["Monday", "Wednesday", "Friday"],
+      "time": "9:00 AM - 10:00 AM"
+    },
+    "room": "Liberal Arts 312"
+  },
+  {
+    "Id": 4,
+    "courseCode": "MATH201",
+    "title": "Calculus II",
+    "credits": 4,
+    "department": "Mathematics",
+    "semester": "Spring",
+    "year": 2024,
+    "capacity": 30,
+    "enrolled": 26,
+    "instructor": "Dr. Robert Kim",
+    "schedule": {
+      "days": ["Monday", "Wednesday", "Friday"],
+      "time": "11:00 AM - 12:00 PM"
+    },
+    "room": "Science Building 145"
+  },
+  {
+    "Id": 5,
+    "courseCode": "PSYC101",
+    "title": "Introduction to Psychology",
+    "credits": 3,
+    "department": "Psychology",
+    "semester": "Spring",
+    "year": 2024,
+    "capacity": 60,
+    "enrolled": 54,
+    "instructor": "Dr. Lisa Thompson",
+    "schedule": {
+      "days": ["Tuesday", "Thursday"],
+      "time": "10:00 AM - 11:30 AM"
+    },
+    "room": "Social Sciences 201"
+  },
+  {
+    "Id": 6,
+    "courseCode": "CHEM201",
+    "title": "Organic Chemistry",
+    "credits": 4,
+    "department": "Chemistry",
+    "semester": "Spring",
+    "year": 2024,
+    "capacity": 24,
+    "enrolled": 20,
+    "instructor": "Dr. Mark Wilson",
+    "schedule": {
+      "days": ["Monday", "Wednesday", "Friday"],
+      "time": "1:00 PM - 2:00 PM"
+    },
+    "room": "Chemistry Lab 301"
+  },
+  {
+    "Id": 7,
+    "courseCode": "HIST201",
+    "title": "World History",
+    "credits": 3,
+    "department": "History",
+    "semester": "Spring",
+    "year": 2024,
+    "capacity": 40,
+    "enrolled": 35,
+    "instructor": "Dr. Patricia Garcia",
+    "schedule": {
+      "days": ["Tuesday", "Thursday"],
+      "time": "3:30 PM - 5:00 PM"
+    },
+    "room": "Liberal Arts 150"
+  },
+  {
+    "Id": 8,
+    "courseCode": "PHYS201",
+    "title": "Physics I",
+    "credits": 4,
+    "department": "Physics",
+    "semester": "Spring",
+    "year": 2024,
+    "capacity": 28,
+    "enrolled": 22,
+    "instructor": "Dr. James Lee",
+    "schedule": {
+      "days": ["Monday", "Wednesday", "Friday"],
+      "time": "2:00 PM - 3:00 PM"
+    },
+    "room": "Science Building 210"
+  }
+]
