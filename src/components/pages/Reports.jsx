@@ -295,7 +295,7 @@ const Reports = () => {
                       </div>
                     </div>
                     <span className="font-semibold text-success-600">
-                      {student.gpa.toFixed(2)}
+{(student.gpa || 0).toFixed(2)}
                     </span>
                   </div>
                 ))}
