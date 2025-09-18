@@ -47,15 +47,15 @@ const Students = () => {
       setFilteredStudents(students);
     } else {
 const filtered = students.filter(student => {
-        const hobbiesString = Array.isArray(student.hobbies) ? student.hobbies.join(' ').toLowerCase() : '';
+        const hobbiesString = student.hobbies_c || '';
         return (
-          student.firstName.toLowerCase().includes(value.toLowerCase()) ||
-          student.lastName.toLowerCase().includes(value.toLowerCase()) ||
-          student.email.toLowerCase().includes(value.toLowerCase()) ||
-          student.studentId.toLowerCase().includes(value.toLowerCase()) ||
-          student.major.toLowerCase().includes(value.toLowerCase()) ||
-          (student.gender && student.gender.toLowerCase().includes(value.toLowerCase())) ||
-          hobbiesString.includes(value.toLowerCase())
+          student.first_name_c?.toLowerCase().includes(value.toLowerCase()) ||
+          student.last_name_c?.toLowerCase().includes(value.toLowerCase()) ||
+          student.email_c?.toLowerCase().includes(value.toLowerCase()) ||
+          student.student_id_c?.toLowerCase().includes(value.toLowerCase()) ||
+          student.major_c?.toLowerCase().includes(value.toLowerCase()) ||
+          (student.gender_c && student.gender_c.toLowerCase().includes(value.toLowerCase())) ||
+          hobbiesString.toLowerCase().includes(value.toLowerCase())
         );
       });
       setFilteredStudents(filtered);
@@ -187,38 +187,36 @@ const filtered = students.filter(student => {
                         <div className="flex items-center">
                           <div className="w-10 h-10 bg-primary-100 rounded-full flex items-center justify-center">
                             <span className="text-primary-600 font-medium">
-                              {student.firstName[0]}{student.lastName[0]}
+                              {student.first_name_c?.[0] || ''}{student.last_name_c?.[0] || ''}
                             </span>
                           </div>
                           <div className="ml-4">
                             <div className="text-sm font-medium text-gray-900">
-                              {student.firstName} {student.lastName}
+                              {student.first_name_c} {student.last_name_c}
                             </div>
                             <div className="text-sm text-gray-500">
-                              {student.email}
+                              {student.email_c}
                             </div>
                             <div className="text-xs text-gray-400 mt-1">
-                              {Array.isArray(student.hobbies) && student.hobbies.length > 0 
-                                ? student.hobbies.slice(0, 2).join(', ') + (student.hobbies.length > 2 ? '...' : '')
-                                : 'No hobbies'}
+                              {student.hobbies_c || 'No hobbies'}
                             </div>
                           </div>
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {student.studentId}
+                        {student.student_id_c}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {student.major}
+                        {student.major_c}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {student.year}
+                        {student.year_c}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        <span className="font-medium">{student.gpa}</span>
+                        <span className="font-medium">{student.gpa_c}</span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {student.gender || 'N/A'}
+                        {student.gender_c || 'N/A'}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                         <div className="flex items-center">
@@ -228,28 +226,28 @@ const filtered = students.filter(student => {
                               name="Star"
                               size={14}
                               className={`${
-                                i < (student.rating || 0) 
+                                i < (student.rating_c || 0) 
                                   ? 'text-yellow-400 fill-current' 
                                   : 'text-gray-300'
                               }`}
                             />
                           ))}
                           <span className="ml-2 text-xs text-gray-600">
-                            {student.rating || 0}/5
+                            {student.rating_c || 0}/5
                           </span>
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                         <span className="font-medium text-success-600">
-                          ${parseFloat(student.amountPaid || 0).toLocaleString('en-US', { 
+                          ${parseFloat(student.amount_paid_c || 0).toLocaleString('en-US', { 
                             minimumFractionDigits: 2,
                             maximumFractionDigits: 2
                           })}
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <Badge variant={student.status === "Active" ? "active" : "inactive"}>
-                          {student.status}
+                        <Badge variant={student.status_c === "Active" ? "active" : "inactive"}>
+                          {student.status_c}
                         </Badge>
                       </td>
 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">

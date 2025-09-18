@@ -1,131 +1,208 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { AuthContext } from "@/App";
 import ApperIcon from "@/components/ApperIcon";
+import Button from "@/components/atoms/Button";
 import { cn } from "@/utils/cn";
-
 const Sidebar = () => {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+const { logout } = useContext(AuthContext);
+  const { user, isAuthenticated } = useSelector((state) => state.user);
 
-const navigationItems = [
-    { name: "Dashboard", href: "/dashboard", icon: "LayoutDashboard" },
-    { name: "Students", href: "/students", icon: "Users" },
-    { name: "Courses", href: "/courses", icon: "BookOpen" },
-    { name: "Grades", href: "/grades", icon: "GraduationCap" },
-    { name: "Schedule", href: "/schedule", icon: "Calendar" },
-    { name: "Documents", href: "/documents", icon: "FileText" },
-    { name: "Reports", href: "/reports", icon: "BarChart3" },
+  const navigation = [
+    { name: 'Dashboard', href: '/dashboard', icon: 'BarChart3' },
+    { name: 'Students', href: '/students', icon: 'Users' },
+    { name: 'Courses', href: '/courses', icon: 'BookOpen' },
+    { name: 'Grades', href: '/grades', icon: 'GraduationCap' },
+    { name: 'Schedule', href: '/schedule', icon: 'Calendar' },
+    { name: 'Documents', href: '/documents', icon: 'FileText' },
+    { name: 'Reports', href: '/reports', icon: 'TrendingUp' },
   ];
 
   const toggleMobile = () => {
     setIsMobileOpen(!isMobileOpen);
   };
 
-  // Desktop Sidebar
+// Desktop Sidebar
   const DesktopSidebar = () => (
-    <div className="hidden lg:flex lg:flex-col lg:w-64 lg:fixed lg:inset-y-0">
-      <div className="flex flex-col flex-grow bg-primary-800 overflow-y-auto">
-        <div className="flex items-center flex-shrink-0 px-6 py-6">
-          <div className="flex items-center">
-            <div className="w-8 h-8 bg-accent-500 rounded-lg flex items-center justify-center">
-              <ApperIcon name="GraduationCap" className="w-5 h-5 text-white" />
+
+const DesktopSidebar = () => (
+    <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-64 lg:flex-col">
+      <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-white px-6 border-r border-gray-200">
+        <div className="flex h-16 shrink-0 items-center">
+          <div className="flex items-center space-x-3">
+            <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-sm">E</span>
             </div>
-            <h1 className="ml-3 text-xl font-bold text-white">EduHub</h1>
+            <span className="text-xl font-bold text-gray-900">EduHub</span>
           </div>
         </div>
-        <nav className="mt-2 flex-1 px-3 pb-4 space-y-1">
-          {navigationItems.map((item) => (
-            <NavLink
-              key={item.name}
-              to={item.href}
-              className={({ isActive }) =>
-                cn(
-                  "group flex items-center px-3 py-3 text-sm font-medium rounded-lg transition-colors duration-200",
-                  isActive
-                    ? "bg-primary-700 text-white"
-                    : "text-primary-100 hover:bg-primary-700 hover:text-white"
-                )
-              }
-            >
-              <ApperIcon
-                name={item.icon}
-                className="mr-3 h-5 w-5 flex-shrink-0"
-              />
-              {item.name}
-            </NavLink>
-          ))}
+        <nav className="flex flex-1 flex-col">
+          <ul role="list" className="flex flex-1 flex-col gap-y-7">
+            <li>
+              <ul role="list" className="-mx-2 space-y-1">
+                {navigation.map((item) => (
+                  <li key={item.name}>
+                    <NavLink
+                      to={item.href}
+                      className={({ isActive }) =>
+                        cn(
+                          isActive
+                            ? 'bg-primary-50 text-primary-600 border-r-2 border-primary-600'
+                            : 'text-gray-700 hover:text-primary-600 hover:bg-gray-50',
+                          'group flex gap-x-3 rounded-l-md p-2 text-sm leading-6 font-medium transition-colors'
+                        )
+                      }
+                    >
+                      <ApperIcon
+                        name={item.icon}
+                        className="h-5 w-5 shrink-0"
+                        aria-hidden="true"
+                      />
+                      {item.name}
+                    </NavLink>
+                  </li>
+                ))}
+              </ul>
+            </li>
+            {/* User info and logout */}
+            <li className="mt-auto">
+              {isAuthenticated && user && (
+                <div className="flex items-center gap-x-4 px-2 py-3 text-sm font-medium text-gray-900">
+                  <div className="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center">
+                    <span className="text-primary-600 font-medium text-sm">
+                      {user.firstName?.[0] || user.name?.[0] || 'U'}
+                    </span>
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-sm font-medium text-gray-900">
+                      {user.firstName ? `${user.firstName} ${user.lastName || ''}` : user.name || 'User'}
+                    </p>
+                    <p className="text-xs text-gray-500">{user.emailAddress || user.email}</p>
+                  </div>
+                </div>
+              )}
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={logout}
+                className="w-full justify-start text-gray-700 hover:text-red-600 hover:bg-red-50"
+              >
+                <ApperIcon name="LogOut" className="h-5 w-5 mr-3" />
+                Logout
+              </Button>
+            </li>
+          </ul>
         </nav>
       </div>
     </div>
   );
 
-  // Mobile Sidebar
   const MobileSidebar = () => (
     <>
-      {/* Mobile menu button */}
-      <div className="lg:hidden fixed top-4 left-4 z-50">
-        <button
-          onClick={toggleMobile}
-          className="bg-white p-2 rounded-lg shadow-md"
-        >
-          <ApperIcon name="Menu" className="h-6 w-6 text-gray-600" />
-        </button>
-      </div>
-
-      {/* Mobile overlay */}
-      {isMobileOpen && (
-        <div
-          className="lg:hidden fixed inset-0 z-40 bg-black bg-opacity-50"
-          onClick={() => setIsMobileOpen(false)}
-        />
-      )}
-
-      {/* Mobile sidebar */}
-      <div
-        className={cn(
-          "lg:hidden fixed inset-y-0 left-0 z-50 w-64 bg-primary-800 transform transition-transform duration-300 ease-in-out",
-          isMobileOpen ? "translate-x-0" : "-translate-x-full"
-        )}
-      >
-        <div className="flex items-center justify-between px-6 py-6">
-          <div className="flex items-center">
-            <div className="w-8 h-8 bg-accent-500 rounded-lg flex items-center justify-center">
-              <ApperIcon name="GraduationCap" className="w-5 h-5 text-white" />
+      <div className="lg:hidden">
+        <div className="flex items-center justify-between bg-white px-4 py-2 border-b border-gray-200">
+          <div className="flex items-center space-x-3">
+            <div className="w-6 h-6 bg-primary-600 rounded flex items-center justify-center">
+              <span className="text-white font-bold text-xs">E</span>
             </div>
-            <h1 className="ml-3 text-xl font-bold text-white">EduHub</h1>
+            <span className="text-lg font-bold text-gray-900">EduHub</span>
           </div>
           <button
-            onClick={() => setIsMobileOpen(false)}
-            className="text-white hover:text-gray-300"
+            type="button"
+            className="text-gray-500 hover:text-gray-600"
+            onClick={() => setIsMobileOpen(!isMobileOpen)}
           >
-            <ApperIcon name="X" className="h-6 w-6" />
+            <ApperIcon name={isMobileOpen ? "X" : "Menu"} className="h-6 w-6" />
           </button>
         </div>
-        <nav className="mt-2 px-3 pb-4 space-y-1">
-          {navigationItems.map((item) => (
-            <NavLink
-              key={item.name}
-              to={item.href}
-              onClick={() => setIsMobileOpen(false)}
-              className={({ isActive }) =>
-                cn(
-                  "group flex items-center px-3 py-3 text-sm font-medium rounded-lg transition-colors duration-200",
-                  isActive
-                    ? "bg-primary-700 text-white"
-                    : "text-primary-100 hover:bg-primary-700 hover:text-white"
-                )
-              }
-            >
-              <ApperIcon
-                name={item.icon}
-                className="mr-3 h-5 w-5 flex-shrink-0"
-              />
-              {item.name}
-            </NavLink>
-          ))}
-        </nav>
       </div>
+
+      {isMobileOpen && (
+        <div className="lg:hidden fixed inset-0 z-40">
+          <div className="fixed inset-0 bg-gray-600 bg-opacity-75" onClick={() => setIsMobileOpen(false)} />
+          <div className="fixed inset-y-0 left-0 z-50 w-64 bg-white">
+            <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-white px-6">
+              <div className="flex h-16 shrink-0 items-center justify-between">
+                <div className="flex items-center space-x-3">
+                  <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
+                    <span className="text-white font-bold text-sm">E</span>
+                  </div>
+                  <span className="text-xl font-bold text-gray-900">EduHub</span>
+                </div>
+                <button
+                  type="button"
+                  className="text-gray-500 hover:text-gray-600"
+                  onClick={() => setIsMobileOpen(false)}
+                >
+                  <ApperIcon name="X" className="h-6 w-6" />
+                </button>
+              </div>
+              <nav className="flex flex-1 flex-col">
+                <ul role="list" className="flex flex-1 flex-col gap-y-7">
+                  <li>
+                    <ul role="list" className="-mx-2 space-y-1">
+                      {navigation.map((item) => (
+                        <li key={item.name}>
+                          <NavLink
+                            to={item.href}
+                            onClick={() => setIsMobileOpen(false)}
+                            className={({ isActive }) =>
+                              cn(
+                                isActive
+                                  ? 'bg-primary-50 text-primary-600 border-r-2 border-primary-600'
+                                  : 'text-gray-700 hover:text-primary-600 hover:bg-gray-50',
+                                'group flex gap-x-3 rounded-l-md p-2 text-sm leading-6 font-medium transition-colors'
+                              )
+                            }
+                          >
+                            <ApperIcon
+                              name={item.icon}
+                              className="h-5 w-5 shrink-0"
+                              aria-hidden="true"
+                            />
+                            {item.name}
+                          </NavLink>
+                        </li>
+                      ))}
+                    </ul>
+                  </li>
+                  <li className="mt-auto">
+                    {isAuthenticated && user && (
+                      <div className="flex items-center gap-x-4 px-2 py-3 text-sm font-medium text-gray-900">
+                        <div className="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center">
+                          <span className="text-primary-600 font-medium text-sm">
+                            {user.firstName?.[0] || user.name?.[0] || 'U'}
+                          </span>
+                        </div>
+                        <div className="flex-1">
+                          <p className="text-sm font-medium text-gray-900">
+                            {user.firstName ? `${user.firstName} ${user.lastName || ''}` : user.name || 'User'}
+                          </p>
+                          <p className="text-xs text-gray-500">{user.emailAddress || user.email}</p>
+                        </div>
+                      </div>
+                    )}
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={logout}
+                      className="w-full justify-start text-gray-700 hover:text-red-600 hover:bg-red-50"
+                    >
+                      <ApperIcon name="LogOut" className="h-5 w-5 mr-3" />
+                      Logout
+                    </Button>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
+
 
   return (
     <>

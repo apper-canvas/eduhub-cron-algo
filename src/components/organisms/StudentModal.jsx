@@ -21,25 +21,25 @@ const [formData, setFormData] = useState({
     gender: "",
     rating: 0,
     amountPaid: "",
-    hobbies: []
+    hobbies: ""
   });
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
 if (student) {
       setFormData({
-        firstName: student.firstName || "",
-        lastName: student.lastName || "",
-        email: student.email || "",
-        phone: student.phone || "",
-        studentId: student.studentId || "",
-        major: student.major || "",
-        year: student.year || "",
-        status: student.status || "Active",
-        gender: student.gender || "",
-        rating: student.rating || 0,
-        amountPaid: student.amountPaid || "",
-        hobbies: student.hobbies || []
+        firstName: student.first_name_c || "",
+        lastName: student.last_name_c || "",
+        email: student.email_c || "",
+        phone: student.phone_c || "",
+        studentId: student.student_id_c || "",
+        major: student.major_c || "",
+        year: student.year_c || "",
+        status: student.status_c || "Active",
+        gender: student.gender_c || "",
+        rating: student.rating_c || 0,
+        amountPaid: student.amount_paid_c || "",
+        hobbies: student.hobbies_c || ""
       });
     } else {
       setFormData({

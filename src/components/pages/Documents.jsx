@@ -56,9 +56,9 @@ const Documents = () => {
     loadData();
   }, []);
 
-  const getStudentName = (studentId) => {
+const getStudentName = (studentId) => {
     const student = students.find(s => s.Id === studentId);
-    return student ? `${student.firstName} ${student.lastName}` : `Student ID: ${studentId}`;
+    return student ? `${student.first_name_c} ${student.last_name_c}` : `Student ID: ${studentId}`;
   };
 
   const handleSearch = (e) => {
@@ -91,8 +91,8 @@ const Documents = () => {
   const handleDownload = (document) => {
     // Simulate document download
     const link = document.createElement('a');
-    link.href = document.fileUrl;
-    link.download = document.fileName;
+link.href = document.file_url_c;
+    link.download = document.file_name_c;
     link.click();
     toast.success("Document download started");
   };
@@ -118,15 +118,15 @@ const Documents = () => {
   };
 
   // Filter documents
-  const filteredDocuments = documents.filter(document => {
+const filteredDocuments = documents.filter(document => {
     const matchesSearch = 
-      document.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      document.fileName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      getStudentName(document.studentId).toLowerCase().includes(searchTerm.toLowerCase()) ||
-      document.description.toLowerCase().includes(searchTerm.toLowerCase());
+      document.title_c?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      document.file_name_c?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      getStudentName(document.student_id_c?.Id || document.student_id_c).toLowerCase().includes(searchTerm.toLowerCase()) ||
+      document.description_c?.toLowerCase().includes(searchTerm.toLowerCase());
     
-    const matchesCategory = !selectedCategory || document.category === selectedCategory;
-    const matchesStudent = !selectedStudentId || document.studentId.toString() === selectedStudentId;
+    const matchesCategory = !selectedCategory || document.category_c === selectedCategory;
+    const matchesStudent = !selectedStudentId || (document.student_id_c?.Id || document.student_id_c)?.toString() === selectedStudentId;
     
     return matchesSearch && matchesCategory && matchesStudent;
   });
@@ -209,9 +209,9 @@ const Documents = () => {
             className="min-w-[200px]"
           >
             <option value="">All Students</option>
-            {students.map(student => (
+{students.map(student => (
               <option key={student.Id} value={student.Id}>
-                {student.firstName} {student.lastName} - {student.studentId}
+                {student.first_name_c} {student.last_name_c} - {student.student_id_c}
               </option>
             ))}
           </Select>
@@ -258,7 +258,7 @@ const Documents = () => {
                 <tbody className="bg-white divide-y divide-gray-200">
                   {paginatedDocuments.map((document, index) => (
                     <motion.tr
-                      key={document.Id}
+key={document.Id}
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.05 }}
@@ -273,34 +273,34 @@ const Documents = () => {
                           </div>
                           <div className="ml-4">
                             <div className="text-sm font-medium text-gray-900">
-                              {document.title}
+                              {document.title_c}
                             </div>
                             <div className="text-sm text-gray-500">
-                              {document.fileName}
+                              {document.file_name_c}
                             </div>
                           </div>
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-sm text-gray-900">
-                          {getStudentName(document.studentId)}
+                          {getStudentName(document.student_id_c?.Id || document.student_id_c)}
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <Badge variant={getCategoryBadgeVariant(document.category)}>
-                          {document.category}
+                        <Badge variant={getCategoryBadgeVariant(document.category_c)}>
+                          {document.category_c}
                         </Badge>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        <div>{document.fileType.toUpperCase()}</div>
-                        <div>{formatFileSize(document.fileSize)}</div>
+                        <div>{document.file_type_c?.toUpperCase()}</div>
+                        <div>{formatFileSize(document.file_size_c)}</div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {new Date(document.uploadDate).toLocaleDateString()}
+                        {new Date(document.upload_date_c || document.CreatedOn).toLocaleDateString()}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <Badge variant={getStatusBadgeVariant(document.status)}>
-                          {document.status}
+                        <Badge variant={getStatusBadgeVariant(document.status_c)}>
+                          {document.status_c}
                         </Badge>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
@@ -316,7 +316,7 @@ const Documents = () => {
                           <Button
                             size="sm"
                             variant="ghost"
-                            onClick={() => window.open(document.fileUrl, '_blank')}
+                            onClick={() => window.open(document.file_url_c, '_blank')}
                             title="View"
                           >
                             <ApperIcon name="Eye" className="w-4 h-4" />

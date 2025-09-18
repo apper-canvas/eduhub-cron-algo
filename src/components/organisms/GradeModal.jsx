@@ -24,14 +24,14 @@ const GradeModal = ({ isOpen, onClose, onSave, grade, students, courses }) => {
   };
 
   useEffect(() => {
-    if (grade) {
+if (grade) {
       setFormData({
-        studentId: grade.studentId || "",
-        courseId: grade.courseId || "",
-        grade: grade.grade || "",
-        points: grade.points.toString() || "",
-        semester: grade.semester || "",
-        year: grade.year.toString() || ""
+        studentId: (grade.student_id_c?.Id || grade.student_id_c)?.toString() || "",
+        courseId: (grade.course_id_c?.Id || grade.course_id_c)?.toString() || "",
+        grade: grade.grade_c || "",
+        points: (grade.points_c || 0).toString(),
+        semester: grade.semester_c || "",
+        year: (grade.year_c || new Date().getFullYear()).toString()
       });
     } else {
       setFormData({
@@ -81,9 +81,12 @@ const GradeModal = ({ isOpen, onClose, onSave, grade, students, courses }) => {
     e.preventDefault();
     if (validateForm()) {
       const gradeData = {
-        ...formData,
-        points: parseFloat(formData.points),
-        year: parseInt(formData.year)
+grade_c: formData.grade,
+        points_c: parseFloat(formData.points),
+        semester_c: formData.semester,
+        year_c: parseInt(formData.year),
+        student_id_c: parseInt(formData.studentId),
+        course_id_c: parseInt(formData.courseId)
       };
       onSave(gradeData);
     }
@@ -124,8 +127,8 @@ const GradeModal = ({ isOpen, onClose, onSave, grade, students, courses }) => {
               >
                 <option value="">Select Student</option>
                 {students.map((student) => (
-                  <option key={student.Id} value={student.Id.toString()}>
-                    {student.firstName} {student.lastName} ({student.studentId})
+<option key={student.Id} value={student.Id.toString()}>
+                    {student.first_name_c} {student.last_name_c} ({student.student_id_c})
                   </option>
                 ))}
               </Select>
@@ -138,8 +141,9 @@ const GradeModal = ({ isOpen, onClose, onSave, grade, students, courses }) => {
                 error={errors.courseId}
               >
                 <option value="">Select Course</option>
-                {courses.map((course) => (
+{courses.map((course) => (
                   <option key={course.Id} value={course.Id.toString()}>
+                    {course.course_code_c} - {course.title_c}
                     {course.courseCode} - {course.title}
                   </option>
                 ))}

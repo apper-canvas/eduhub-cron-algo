@@ -25,13 +25,13 @@ const DocumentModal = ({
   const [dragOver, setDragOver] = useState(false);
 
   useEffect(() => {
-    if (document) {
+if (document) {
       setFormData({
-        title: document.title || "",
-        description: document.description || "",
-        category: document.category || "",
-        studentId: document.studentId || defaultStudentId || "",
-        status: document.status || "Active",
+        title: document.title_c || "",
+        description: document.description_c || "",
+        category: document.category_c || "",
+        studentId: (document.student_id_c?.Id || document.student_id_c) || defaultStudentId || "",
+        status: document.status_c || "Active",
         file: null // Don't pre-fill file for editing
       });
     } else {
@@ -130,12 +130,16 @@ const DocumentModal = ({
     if (validateForm()) {
       // Simulate file processing
       const processedData = {
-        ...formData,
-        fileName: formData.file ? formData.file.name : document?.fileName || "",
-        fileSize: formData.file ? formData.file.size : document?.fileSize || 0,
-        fileType: formData.file ? formData.file.type.split('/')[1] : document?.fileType || "pdf",
-        fileUrl: formData.file ? URL.createObjectURL(formData.file) : document?.fileUrl || "",
-        uploadDate: document?.uploadDate || new Date().toISOString()
+title_c: formData.title,
+        description_c: formData.description,
+        category_c: formData.category,
+        student_id_c: parseInt(formData.studentId),
+        status_c: formData.status,
+        file_name_c: formData.file ? formData.file.name : document?.file_name_c || "",
+        file_size_c: formData.file ? formData.file.size : document?.file_size_c || 0,
+        file_type_c: formData.file ? formData.file.type.split('/')[1] : document?.file_type_c || "pdf",
+        file_url_c: formData.file ? URL.createObjectURL(formData.file) : document?.file_url_c || "",
+        upload_date_c: document?.upload_date_c || new Date().toISOString()
       };
       
       onSave(processedData);
@@ -244,8 +248,8 @@ const DocumentModal = ({
               >
                 <option value="">Select Student</option>
                 {students.map(student => (
-                  <option key={student.Id} value={student.Id}>
-                    {student.firstName} {student.lastName} - {student.studentId}
+<option key={student.Id} value={student.Id}>
+                    {student.first_name_c} {student.last_name_c} - {student.student_id_c}
                   </option>
                 ))}
               </Select>

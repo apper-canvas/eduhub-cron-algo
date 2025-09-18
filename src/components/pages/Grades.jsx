@@ -45,16 +45,16 @@ const Grades = () => {
       setCourses(coursesData);
 
       // Enrich grades with student and course information
-      const enriched = gradesData.map(grade => {
-        const student = studentsData.find(s => s.Id.toString() === grade.studentId);
-        const course = coursesData.find(c => c.Id.toString() === grade.courseId);
+const enriched = gradesData.map(grade => {
+        const student = studentsData.find(s => s.Id.toString() === (grade.student_id_c?.Id || grade.student_id_c)?.toString());
+        const course = coursesData.find(c => c.Id.toString() === (grade.course_id_c?.Id || grade.course_id_c)?.toString());
         
         return {
           ...grade,
-          studentName: student ? `${student.firstName} ${student.lastName}` : "Unknown Student",
-          studentEmail: student?.email || "",
-          courseTitle: course?.title || "Unknown Course",
-          courseCode: course?.courseCode || ""
+          studentName: student ? `${student.first_name_c} ${student.last_name_c}` : "Unknown Student",
+          studentEmail: student?.email_c || "",
+          courseTitle: course?.title_c || "Unknown Course",
+          courseCode: course?.course_code_c || ""
         };
       });
 
@@ -75,11 +75,11 @@ const Grades = () => {
     if (!value.trim()) {
       setFilteredGrades(enrichedGrades);
     } else {
-      const filtered = enrichedGrades.filter(grade =>
+const filtered = enrichedGrades.filter(grade =>
         grade.studentName.toLowerCase().includes(value.toLowerCase()) ||
         grade.courseTitle.toLowerCase().includes(value.toLowerCase()) ||
         grade.courseCode.toLowerCase().includes(value.toLowerCase()) ||
-        grade.grade.toLowerCase().includes(value.toLowerCase())
+        grade.grade_c?.toLowerCase().includes(value.toLowerCase())
       );
       setFilteredGrades(filtered);
     }
@@ -214,7 +214,7 @@ const Grades = () => {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {paginatedGrades.map((grade, index) => (
+{paginatedGrades.map((grade, index) => (
                     <motion.tr
                       key={grade.Id}
                       initial={{ opacity: 0, y: 10 }}
@@ -243,18 +243,18 @@ const Grades = () => {
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <Badge variant={getGradeVariant(grade.grade)}>
-                          {grade.grade}
+                        <Badge variant={getGradeVariant(grade.grade_c)}>
+                          {grade.grade_c}
                         </Badge>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {grade.points.toFixed(1)}
+                        {parseFloat(grade.points_c || 0).toFixed(1)}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {grade.semester} {grade.year}
+                        {grade.semester_c} {grade.year_c}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {new Date(grade.dateEntered).toLocaleDateString()}
+                        {new Date(grade.date_entered_c || grade.CreatedOn).toLocaleDateString()}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                         <div className="flex items-center space-x-2">
