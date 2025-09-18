@@ -38,18 +38,18 @@ const Schedule = () => {
     loadCourses();
   }, []);
 
-  const getCoursesForTimeSlot = (day, timeSlot) => {
-return courses.filter(course => 
+const getCoursesForTimeSlot = (day, timeSlot) => {
+    return courses.filter(course => 
       course.schedule?.days?.includes(day) && 
       course.schedule?.time === timeSlot
     );
   };
 
-  const getFilteredCourses = () => {
+const getFilteredCourses = () => {
     if (selectedDay === "all") {
       return courses;
     }
-    return courses.filter(course => course.schedule.days.includes(selectedDay));
+    return courses.filter(course => course.schedule?.days?.includes(selectedDay));
   };
 
   if (loading) return <Loading />;
@@ -185,7 +185,7 @@ return courses.filter(course =>
             <div className="p-6">
               <div className="grid gap-4">
                 {filteredCourses
-                  .sort((a, b) => a.schedule.time.localeCompare(b.schedule.time))
+.sort((a, b) => (a.schedule?.time || '').localeCompare(b.schedule?.time || ''))
                   .map((course, index) => (
                     <motion.div
                       key={course.Id}
@@ -257,7 +257,7 @@ return courses.filter(course =>
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">Time Slots Used</p>
               <p className="text-2xl font-bold text-gray-900">
-                {new Set(courses.map(c => c.schedule.time)).size}
+{new Set(courses.map(c => c.schedule?.time).filter(Boolean)).size}
               </p>
             </div>
           </div>
