@@ -47,17 +47,15 @@ const Courses = () => {
       setFilteredCourses(courses);
     } else {
 const filtered = courses.filter(course =>
-        course.title.toLowerCase().includes(value.toLowerCase()) ||
-        course.courseCode.toLowerCase().includes(value.toLowerCase()) ||
-        course.department.toLowerCase().includes(value.toLowerCase()) ||
-        course.instructor.toLowerCase().includes(value.toLowerCase()) ||
-        course.phone?.toLowerCase().includes(value.toLowerCase()) ||
-        course.email?.toLowerCase().includes(value.toLowerCase()) ||
-        course.website?.toLowerCase().includes(value.toLowerCase()) ||
-        course.topics?.toLowerCase().includes(value.toLowerCase()) ||
-        course.specializations?.toLowerCase().includes(value.toLowerCase()) ||
-        course.difficulty?.toLowerCase().includes(value.toLowerCase()) ||
-        course.deliveryMethods?.toLowerCase().includes(value.toLowerCase())
+        course.title_c?.toLowerCase().includes(value.toLowerCase()) ||
+        course.course_code_c?.toLowerCase().includes(value.toLowerCase()) ||
+        course.department_c?.toLowerCase().includes(value.toLowerCase()) ||
+        course.instructor_c?.toLowerCase().includes(value.toLowerCase()) ||
+        course.phone_c?.toLowerCase().includes(value.toLowerCase()) ||
+        course.email_c?.toLowerCase().includes(value.toLowerCase()) ||
+        course.website_c?.toLowerCase().includes(value.toLowerCase()) ||
+        course.room_c?.toLowerCase().includes(value.toLowerCase()) ||
+        course.schedule_c?.toLowerCase().includes(value.toLowerCase())
       );
       setFilteredCourses(filtered);
     }
@@ -176,7 +174,7 @@ const filtered = courses.filter(course =>
                 <tbody className="bg-white divide-y divide-gray-200">
                   {paginatedCourses.map((course, index) => (
                     <motion.tr
-                      key={course.Id}
+key={course.Id}
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.05 }}
@@ -185,26 +183,26 @@ const filtered = courses.filter(course =>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div>
                           <div className="text-sm font-medium text-gray-900">
-                            {course.courseCode}
+                            {course.course_code_c}
                           </div>
                           <div className="text-sm text-gray-500">
-                            {course.title}
+                            {course.title_c}
                           </div>
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {course.department}
+                        {course.department_c}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {course.instructor}
+                        {course.instructor_c}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                         <div>
                           <div className="font-medium">
-                            {course.schedule.days.join(", ")}
+                            {course.schedule_c || 'TBA'}
                           </div>
                           <div className="text-gray-500">
-                            {course.schedule.time}
+                            {course.room_c || 'TBA'}
                           </div>
                         </div>
                       </td>

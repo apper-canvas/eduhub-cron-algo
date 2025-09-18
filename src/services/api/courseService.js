@@ -11,19 +11,15 @@ const TABLE_NAME = 'course_c';
 const UPDATEABLE_FIELDS = [
   'Name', 'Tags', 'course_code_c', 'title_c', 'credits_c', 'department_c', 
   'semester_c', 'year_c', 'capacity_c', 'enrolled_c', 'instructor_c', 
-  'schedule_c', 'room_c', 'phone_c', 'email_c', 'website_c', 'amount_c',
-  'specializations_c', 'experience_level_c', 'is_active_c', 'topics_c', 
-  'delivery_methods_c', 'difficulty_c'
+'schedule_c', 'room_c', 'phone_c', 'email_c', 'website_c', 'amount_c'
 ];
 
 const ALL_FIELDS = [
-  'Name', 'Tags', 'Owner', 'CreatedOn', 'CreatedBy', 'ModifiedOn', 'ModifiedBy',
+'Name', 'Tags', 'Owner', 'CreatedOn', 'CreatedBy', 'ModifiedOn', 'ModifiedBy',
   'course_code_c', 'title_c', 'credits_c', 'department_c', 'semester_c', 'year_c', 
   'capacity_c', 'enrolled_c', 'instructor_c', 'schedule_c', 'room_c', 'phone_c', 
-  'email_c', 'website_c', 'amount_c', 'specializations_c', 'experience_level_c', 
-  'is_active_c', 'topics_c', 'delivery_methods_c', 'difficulty_c'
+  'email_c', 'website_c', 'amount_c'
 ];
-
 export const courseService = {
   async getAll() {
     try {
@@ -70,28 +66,23 @@ export const courseService = {
     try {
       // Only include updateable fields
 const createData = {
-        Name: courseData.title_c || courseData.title || "Course",
-        course_code_c: courseData.course_code_c || courseData.courseCode,
-        title_c: courseData.title_c || courseData.title,
+        Name: courseData.Name || courseData.title_c || courseData.title || "Course",
+        Tags: courseData.Tags || "",
+        course_code_c: courseData.course_code_c || courseData.courseCode || "",
+        title_c: courseData.title_c || courseData.title || "",
         credits_c: parseInt(courseData.credits_c || courseData.credits || 0),
-        department_c: courseData.department_c || courseData.department,
-        semester_c: courseData.semester_c || courseData.semester,
+        department_c: courseData.department_c || courseData.department || "",
+        semester_c: courseData.semester_c || courseData.semester || "Spring",
         year_c: parseInt(courseData.year_c || courseData.year || new Date().getFullYear()),
         capacity_c: parseInt(courseData.capacity_c || courseData.capacity || 0),
         enrolled_c: parseInt(courseData.enrolled_c || courseData.enrolled || 0),
-        instructor_c: courseData.instructor_c || courseData.instructor,
-        schedule_c: courseData.schedule_c || (courseData.schedule ? JSON.stringify(courseData.schedule) : ""),
-        room_c: courseData.room_c || courseData.room,
-        phone_c: courseData.phone_c || courseData.phone,
-        email_c: courseData.email_c || courseData.email,
-        website_c: courseData.website_c || courseData.website,
-        amount_c: courseData.amount_c ? parseFloat(courseData.amount_c) : (courseData.amount ? parseFloat(courseData.amount) : 0),
-        specializations_c: courseData.specializations_c || courseData.specializations || "",
-        experience_level_c: courseData.experience_level_c || courseData.experienceLevel || "",
-        is_active_c: courseData.is_active_c !== undefined ? courseData.is_active_c : (courseData.isActive !== undefined ? courseData.isActive : true),
-        topics_c: courseData.topics_c || courseData.topics || "",
-        delivery_methods_c: courseData.delivery_methods_c || courseData.deliveryMethods || "",
-        difficulty_c: courseData.difficulty_c || courseData.difficulty || ""
+        instructor_c: courseData.instructor_c || courseData.instructor || "",
+        schedule_c: courseData.schedule_c || courseData.schedule || "",
+        room_c: courseData.room_c || courseData.room || "",
+        phone_c: courseData.phone_c || courseData.phone || "",
+        email_c: courseData.email_c || courseData.email || "",
+        website_c: courseData.website_c || courseData.website || "",
+        amount_c: courseData.amount_c ? parseFloat(courseData.amount_c) : (courseData.amount ? parseFloat(courseData.amount) : null)
       };
 
       const params = { records: [createData] };
@@ -130,7 +121,8 @@ const createData = {
       // Only include updateable fields
       const updateFields = {
 Id: parseInt(id),
-        Name: courseData.title_c || courseData.title,
+        Name: courseData.Name || courseData.title_c || courseData.title,
+        Tags: courseData.Tags || "",
         course_code_c: courseData.course_code_c || courseData.courseCode,
         title_c: courseData.title_c || courseData.title,
         credits_c: parseInt(courseData.credits_c || courseData.credits),
@@ -140,18 +132,12 @@ Id: parseInt(id),
         capacity_c: parseInt(courseData.capacity_c || courseData.capacity),
         enrolled_c: parseInt(courseData.enrolled_c || courseData.enrolled || 0),
         instructor_c: courseData.instructor_c || courseData.instructor,
-        schedule_c: courseData.schedule_c || (courseData.schedule ? JSON.stringify(courseData.schedule) : ""),
+        schedule_c: courseData.schedule_c || courseData.schedule,
         room_c: courseData.room_c || courseData.room,
         phone_c: courseData.phone_c || courseData.phone,
         email_c: courseData.email_c || courseData.email,
         website_c: courseData.website_c || courseData.website,
-        amount_c: courseData.amount_c ? parseFloat(courseData.amount_c) : (courseData.amount ? parseFloat(courseData.amount) : 0),
-        specializations_c: courseData.specializations_c || courseData.specializations || "",
-        experience_level_c: courseData.experience_level_c || courseData.experienceLevel || "",
-        is_active_c: courseData.is_active_c !== undefined ? courseData.is_active_c : (courseData.isActive !== undefined ? courseData.isActive : true),
-        topics_c: courseData.topics_c || courseData.topics || "",
-        delivery_methods_c: courseData.delivery_methods_c || courseData.deliveryMethods || "",
-        difficulty_c: courseData.difficulty_c || courseData.difficulty || ""
+        amount_c: courseData.amount_c ? parseFloat(courseData.amount_c) : (courseData.amount ? parseFloat(courseData.amount) : null)
       };
 
       const params = { records: [updateFields] };

@@ -12,36 +12,28 @@ import ApperIcon from "@/components/ApperIcon";
 
 const CourseModal = ({ isOpen, onClose, onSave, course }) => {
 const [formData, setFormData] = useState({
-courseCode: "",
+    courseCode: "",
     title: "",
     credits: "",
     department: "",
     semester: "",
     year: "",
     capacity: "",
+    enrolled: "",
     instructor: "",
     room: "",
-    days: [],
-    time: "",
+    schedule: "",
     phone: "",
     email: "",
     website: "",
     amount: "",
-    specializations: [],
-    experienceLevel: "",
-    isActive: true,
-topics: "",
-    tag_c: "",
-    deliveryMethods: [],
-    difficulty: "",
-    range_c: "",
     tag_c: ""
   });
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
 if (course) {
-setFormData({
+      setFormData({
         courseCode: course.course_code_c || "",
         title: course.title_c || "",
         credits: course.credits_c ? course.credits_c.toString() : "",
@@ -49,25 +41,18 @@ setFormData({
         semester: course.semester_c || "",
         year: course.year_c ? course.year_c.toString() : "",
         capacity: course.capacity_c ? course.capacity_c.toString() : "",
+        enrolled: course.enrolled_c ? course.enrolled_c.toString() : "",
         instructor: course.instructor_c || "",
         room: course.room_c || "",
-        days: course.schedule_c ? course.schedule_c.split(',') : [],
-        time: course.schedule_c || "",
+        schedule: course.schedule_c || "",
         phone: course.phone_c || "",
         email: course.email_c || "",
         website: course.website_c || "",
         amount: course.amount_c ? course.amount_c.toString() : "",
-        specializations: course.specializations ? course.specializations.split(',').filter(s => s.trim()) : [],
-        experienceLevel: course.experienceLevel || "",
-        isActive: course.isActive !== undefined ? course.isActive : true,
-        topics: course.topics || "",
-        deliveryMethods: course.deliveryMethods ? course.deliveryMethods.split(',').filter(d => d.trim()) : [],
-        difficulty: course.difficulty || "",
-        range_c: course.range_c || "",
-tag_c: course.Tags || course.tag_c || ""
+        tag_c: course.Tags || ""
       });
     } else {
-setFormData({
+      setFormData({
         courseCode: "",
         title: "",
         credits: "",
@@ -75,20 +60,14 @@ setFormData({
         semester: "Spring",
         year: "2024",
         capacity: "",
+        enrolled: "",
         instructor: "",
         room: "",
-        days: [],
-        time: "",
+        schedule: "",
         phone: "",
         email: "",
         website: "",
         amount: "",
-        specializations: [],
-        experienceLevel: "",
-        isActive: true,
-topics: [],
-        deliveryMethods: [],
-        difficulty: "",
         tag_c: ""
       });
     }
@@ -133,7 +112,7 @@ if (!formData.courseCode.trim()) newErrors.courseCode = "Course code is required
     if (formData.amount && isNaN(formData.amount)) newErrors.amount = "Valid amount required";
     if (!formData.difficulty.trim()) newErrors.difficulty = "Difficulty level is required";
     if (formData.range_c && !formData.range_c.includes('-')) newErrors.range_c = "Range must contain min and max values";
-if (!formData.tag_c || !formData.tag_c.trim()) newErrors.tag_c = "At least one tag is required";
+if (!formData.tag_c || !formData.tag_c.trim()) newErrors.tag_c = "Tags are required";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -141,27 +120,24 @@ if (!formData.tag_c || !formData.tag_c.trim()) newErrors.tag_c = "At least one t
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      const courseData = {
-course_code_c: formData.courseCode,
+const courseData = {
+        Name: formData.title,
+        course_code_c: formData.courseCode,
         title_c: formData.title,
         credits_c: parseInt(formData.credits),
         department_c: formData.department,
         semester_c: formData.semester,
         year_c: parseInt(formData.year),
         capacity_c: parseInt(formData.capacity),
+        enrolled_c: parseInt(formData.enrolled) || 0,
         instructor_c: formData.instructor,
+        schedule_c: formData.schedule,
         room_c: formData.room,
-        schedule_c: formData.days.join(','),
         phone_c: formData.phone,
         email_c: formData.email,
         website_c: formData.website,
         amount_c: formData.amount ? parseFloat(formData.amount) : null,
-        specializations: formData.specializations.join(','),
-topics: formData.topics,
-        deliveryMethods: formData.deliveryMethods.join(','),
-        difficulty: formData.difficulty,
-        range_c: formData.range_c,
-        tag_c: formData.tag_c || ""
+        Tags: formData.tag_c
       };
       delete courseData.days;
       delete courseData.time;
