@@ -4,6 +4,8 @@ import Button from "@/components/atoms/Button";
 import Input from "@/components/atoms/Input";
 import Select from "@/components/atoms/Select";
 import CurrencyInput from "@/components/atoms/CurrencyInput";
+import CheckboxGroup from "@/components/atoms/CheckboxGroup";
+import RadioGroup from "@/components/atoms/RadioGroup";
 import ApperIcon from "@/components/ApperIcon";
 
 const CourseModal = ({ isOpen, onClose, onSave, course }) => {
@@ -22,7 +24,13 @@ const [formData, setFormData] = useState({
     phone: "",
     email: "",
     website: "",
-    amount: ""
+    amount: "",
+    specializations: [],
+    experienceLevel: "",
+    isActive: true,
+    topics: [],
+    deliveryMethods: [],
+    difficulty: ""
   });
   const [errors, setErrors] = useState({});
 
@@ -43,7 +51,13 @@ setFormData({
         phone: course.phone || "",
         email: course.email || "",
         website: course.website || "",
-        amount: course.amount ? course.amount.toString() : ""
+        amount: course.amount ? course.amount.toString() : "",
+        specializations: course.specializations ? course.specializations.split(',').filter(s => s.trim()) : [],
+        experienceLevel: course.experienceLevel || "",
+        isActive: course.isActive !== undefined ? course.isActive : true,
+        topics: course.topics ? course.topics.split(',').filter(t => t.trim()) : [],
+        deliveryMethods: course.deliveryMethods ? course.deliveryMethods.split(',').filter(d => d.trim()) : [],
+        difficulty: course.difficulty || ""
       });
     } else {
 setFormData({
@@ -61,15 +75,22 @@ setFormData({
         phone: "",
         email: "",
         website: "",
-        amount: ""
+        amount: "",
+        specializations: [],
+        experienceLevel: "",
+        isActive: true,
+        topics: [],
+        deliveryMethods: [],
+        difficulty: ""
       });
     }
     setErrors({});
   }, [course, isOpen]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    const newValue = type === 'checkbox' ? checked : value;
+    setFormData(prev => ({ ...prev, [name]: newValue }));
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: "" }));
     }
@@ -90,7 +111,7 @@ setFormData({
 const validateForm = () => {
     const newErrors = {};
     
-    if (!formData.courseCode.trim()) newErrors.courseCode = "Course code is required";
+if (!formData.courseCode.trim()) newErrors.courseCode = "Course code is required";
     if (!formData.title.trim()) newErrors.title = "Course title is required";
     if (!formData.credits || isNaN(formData.credits)) newErrors.credits = "Valid credits required";
     if (!formData.department.trim()) newErrors.department = "Department is required";
@@ -103,7 +124,7 @@ const validateForm = () => {
     if (formData.email && !/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = "Valid email required";
     if (formData.website && !/^https?:\/\/.+\..+/.test(formData.website)) newErrors.website = "Valid website URL required";
     if (formData.amount && isNaN(formData.amount)) newErrors.amount = "Valid amount required";
-
+    if (!formData.difficulty.trim()) newErrors.difficulty = "Difficulty level is required";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -112,14 +133,17 @@ const validateForm = () => {
     e.preventDefault();
     if (validateForm()) {
       const courseData = {
-        ...formData,
+...formData,
         credits: parseInt(formData.credits),
         year: parseInt(formData.year),
         capacity: parseInt(formData.capacity),
         schedule: {
           days: formData.days,
           time: formData.time
-        }
+        },
+        specializations: formData.specializations.join(','),
+        topics: formData.topics.join(','),
+        deliveryMethods: formData.deliveryMethods.join(',')
       };
       delete courseData.days;
       delete courseData.time;
@@ -223,7 +247,7 @@ const validateForm = () => {
               placeholder="e.g., Data Structures and Algorithms"
             />
 
-<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <Input
                 label="Department"
                 name="department"
@@ -316,6 +340,108 @@ const validateForm = () => {
               placeholder="e.g., 10:00 AM - 11:00 AM"
             />
 
+            {/* MultiPicklist - Course Specializations */}
+            <CheckboxGroup
+              label="Course Specializations"
+              name="specializations"
+              value={formData.specializations}
+              onChange={handleChange}
+              options={[
+                { value: "Theory", label: "Theory" },
+                { value: "Lab", label: "Laboratory" },
+                { value: "Project", label: "Project-Based" },
+                { value: "Research", label: "Research" },
+                { value: "Internship", label: "Internship" }
+              ]}
+              error={errors.specializations}
+            />
+
+            {/* Range - Student Experience Level */}
+            <div className="space-y-3">
+              <label className="block text-sm font-medium text-gray-700">
+                Student Experience Level Required
+              </label>
+              <Select
+                name="experienceLevel"
+                value={formData.experienceLevel}
+                onChange={handleChange}
+                error={errors.experienceLevel}
+              >
+                <option value="">Select Experience Level</option>
+                <option value="0-1">Beginner (0-1 years)</option>
+                <option value="1-3">Intermediate (1-3 years)</option>
+                <option value="3-5">Advanced (3-5 years)</option>
+                <option value="5+">Expert (5+ years)</option>
+              </Select>
+              {errors.experienceLevel && (
+                <p className="text-sm text-error-600">{errors.experienceLevel}</p>
+              )}
+            </div>
+
+            {/* Boolean - Course Active Status */}
+            <div className="space-y-3">
+              <label className="flex items-center space-x-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  name="isActive"
+                  checked={formData.isActive}
+                  onChange={handleChange}
+                  className="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 rounded focus:ring-primary-500 focus:ring-2"
+                />
+                <span className="text-sm font-medium text-gray-700">Course is active and available for enrollment</span>
+              </label>
+              {errors.isActive && (
+                <p className="text-sm text-error-600">{errors.isActive}</p>
+              )}
+            </div>
+
+            {/* Tag - Course Topics */}
+            <CheckboxGroup
+              label="Course Topics/Keywords"
+              name="topics"
+              value={formData.topics}
+              onChange={handleChange}
+              options={[
+                { value: "Programming", label: "Programming" },
+                { value: "Mathematics", label: "Mathematics" },
+                { value: "Science", label: "Science" },
+                { value: "Engineering", label: "Engineering" },
+                { value: "Business", label: "Business" },
+                { value: "Arts", label: "Arts" },
+                { value: "Languages", label: "Languages" },
+                { value: "Social Studies", label: "Social Studies" }
+              ]}
+              error={errors.topics}
+            />
+
+            {/* Checkbox - Delivery Methods */}
+            <CheckboxGroup
+              label="Course Delivery Methods"
+              name="deliveryMethods"
+              value={formData.deliveryMethods}
+              onChange={handleChange}
+              options={[
+                { value: "Online", label: "Online" },
+                { value: "In-Person", label: "In-Person" },
+                { value: "Hybrid", label: "Hybrid" },
+                { value: "Self-Paced", label: "Self-Paced" }
+              ]}
+              error={errors.deliveryMethods}
+            />
+
+            {/* Radio - Difficulty Level */}
+            <RadioGroup
+              label="Course Difficulty Level"
+              name="difficulty"
+              value={formData.difficulty}
+              onChange={handleChange}
+              options={[
+                { value: "Beginner", label: "Beginner" },
+                { value: "Intermediate", label: "Intermediate" },
+                { value: "Advanced", label: "Advanced" }
+              ]}
+              error={errors.difficulty}
+            />
             <div className="flex justify-end space-x-3 pt-6 border-t border-gray-200">
               <Button variant="outline" onClick={onClose}>
                 Cancel
