@@ -305,7 +305,7 @@ const courseData = {
                     type="button"
                     onClick={() => handleDayChange(day)}
                     className={`px-3 py-2 text-sm font-medium rounded-lg border transition-colors duration-200 ${
-                      formData.days.includes(day)
+formData.schedule.includes(day)
                         ? "bg-primary-600 text-white border-primary-600"
                         : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50"
                     }`}
@@ -314,8 +314,8 @@ const courseData = {
                   </button>
                 ))}
               </div>
-              {errors.days && (
-                <p className="text-sm text-error-600">{errors.days}</p>
+{errors.schedule && (
+                <p className="text-sm text-error-600">{errors.schedule}</p>
               )}
             </div>
 
