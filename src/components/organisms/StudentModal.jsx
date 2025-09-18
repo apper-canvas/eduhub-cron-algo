@@ -6,7 +6,7 @@ import Select from "@/components/atoms/Select";
 import RadioGroup from "@/components/atoms/RadioGroup";
 import StarRating from "@/components/atoms/StarRating";
 import CurrencyInput from "@/components/atoms/CurrencyInput";
-import CheckboxGroup from "@/components/atoms/CheckboxGroup";
+import Tag from "@/components/atoms/Tag";
 import ApperIcon from "@/components/ApperIcon";
 const StudentModal = ({ isOpen, onClose, onSave, student }) => {
 const [formData, setFormData] = useState({
@@ -114,10 +114,24 @@ const validateForm = () => {
     { value: "Gardening", label: "Gardening" }
   ];
 
-  const handleSubmit = (e) => {
+const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      onSave(formData);
+      const studentData = {
+        first_name_c: formData.firstName,
+        last_name_c: formData.lastName,
+        email_c: formData.email,
+        phone_c: formData.phone,
+        student_id_c: formData.studentId,
+        major_c: formData.major,
+        year_c: formData.year,
+        status_c: formData.status,
+        gender_c: formData.gender,
+        rating_c: formData.rating,
+        amount_paid_c: formData.amountPaid ? parseFloat(formData.amountPaid) : null,
+        hobbies_c: formData.hobbies
+      };
+      onSave(studentData);
     }
   };
 
@@ -251,13 +265,13 @@ const validateForm = () => {
               />
             </div>
 
-            <CheckboxGroup
+<Tag
               label="Hobbies"
               name="hobbies"
               value={formData.hobbies}
               onChange={handleChange}
-              options={hobbiesOptions}
               error={errors.hobbies}
+              placeholder="Add hobby..."
             />
 
             <div className="flex justify-end space-x-3 pt-6 border-t border-gray-200">

@@ -6,11 +6,13 @@ import Select from "@/components/atoms/Select";
 import CurrencyInput from "@/components/atoms/CurrencyInput";
 import CheckboxGroup from "@/components/atoms/CheckboxGroup";
 import RadioGroup from "@/components/atoms/RadioGroup";
+import Range from "@/components/atoms/Range";
+import Tag from "@/components/atoms/Tag";
 import ApperIcon from "@/components/ApperIcon";
 
 const CourseModal = ({ isOpen, onClose, onSave, course }) => {
 const [formData, setFormData] = useState({
-    courseCode: "",
+courseCode: "",
     title: "",
     credits: "",
     department: "",
@@ -28,36 +30,40 @@ const [formData, setFormData] = useState({
     specializations: [],
     experienceLevel: "",
     isActive: true,
-    topics: [],
+    topics: "",
     deliveryMethods: [],
-    difficulty: ""
+    difficulty: "",
+    range_c: "",
+    tag_c: ""
   });
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
-    if (course) {
+if (course) {
 setFormData({
-        courseCode: course.courseCode || "",
-        title: course.title || "",
-        credits: course.credits.toString() || "",
-        department: course.department || "",
-        semester: course.semester || "",
-        year: course.year.toString() || "",
-        capacity: course.capacity.toString() || "",
-        instructor: course.instructor || "",
-        room: course.room || "",
-        days: course.schedule?.days || [],
-        time: course.schedule?.time || "",
-        phone: course.phone || "",
-        email: course.email || "",
-        website: course.website || "",
-        amount: course.amount ? course.amount.toString() : "",
+        courseCode: course.course_code_c || "",
+        title: course.title_c || "",
+        credits: course.credits_c ? course.credits_c.toString() : "",
+        department: course.department_c || "",
+        semester: course.semester_c || "",
+        year: course.year_c ? course.year_c.toString() : "",
+        capacity: course.capacity_c ? course.capacity_c.toString() : "",
+        instructor: course.instructor_c || "",
+        room: course.room_c || "",
+        days: course.schedule_c ? course.schedule_c.split(',') : [],
+        time: course.schedule_c || "",
+        phone: course.phone_c || "",
+        email: course.email_c || "",
+        website: course.website_c || "",
+        amount: course.amount_c ? course.amount_c.toString() : "",
         specializations: course.specializations ? course.specializations.split(',').filter(s => s.trim()) : [],
         experienceLevel: course.experienceLevel || "",
         isActive: course.isActive !== undefined ? course.isActive : true,
-        topics: course.topics ? course.topics.split(',').filter(t => t.trim()) : [],
+        topics: course.topics || "",
         deliveryMethods: course.deliveryMethods ? course.deliveryMethods.split(',').filter(d => d.trim()) : [],
-        difficulty: course.difficulty || ""
+        difficulty: course.difficulty || "",
+        range_c: course.range_c || "",
+        tag_c: course.tag_c || ""
       });
     } else {
 setFormData({
@@ -110,7 +116,6 @@ const handleChange = (e) => {
 
 const validateForm = () => {
     const newErrors = {};
-    
 if (!formData.courseCode.trim()) newErrors.courseCode = "Course code is required";
     if (!formData.title.trim()) newErrors.title = "Course title is required";
     if (!formData.credits || isNaN(formData.credits)) newErrors.credits = "Valid credits required";
@@ -125,6 +130,8 @@ if (!formData.courseCode.trim()) newErrors.courseCode = "Course code is required
     if (formData.website && !/^https?:\/\/.+\..+/.test(formData.website)) newErrors.website = "Valid website URL required";
     if (formData.amount && isNaN(formData.amount)) newErrors.amount = "Valid amount required";
     if (!formData.difficulty.trim()) newErrors.difficulty = "Difficulty level is required";
+    if (formData.range_c && !formData.range_c.includes('-')) newErrors.range_c = "Range must contain min and max values";
+    if (!formData.tag_c.trim()) newErrors.tag_c = "At least one tag is required";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -133,17 +140,26 @@ if (!formData.courseCode.trim()) newErrors.courseCode = "Course code is required
     e.preventDefault();
     if (validateForm()) {
       const courseData = {
-...formData,
-        credits: parseInt(formData.credits),
-        year: parseInt(formData.year),
-        capacity: parseInt(formData.capacity),
-        schedule: {
-          days: formData.days,
-          time: formData.time
-        },
+course_code_c: formData.courseCode,
+        title_c: formData.title,
+        credits_c: parseInt(formData.credits),
+        department_c: formData.department,
+        semester_c: formData.semester,
+        year_c: parseInt(formData.year),
+        capacity_c: parseInt(formData.capacity),
+        instructor_c: formData.instructor,
+        room_c: formData.room,
+        schedule_c: formData.days.join(','),
+        phone_c: formData.phone,
+        email_c: formData.email,
+        website_c: formData.website,
+        amount_c: formData.amount ? parseFloat(formData.amount) : null,
         specializations: formData.specializations.join(','),
-        topics: formData.topics.join(','),
-        deliveryMethods: formData.deliveryMethods.join(',')
+        topics: formData.topics,
+        deliveryMethods: formData.deliveryMethods.join(','),
+        difficulty: formData.difficulty,
+        range_c: formData.range_c,
+        tag_c: formData.tag_c
       };
       delete courseData.days;
       delete courseData.time;
@@ -372,11 +388,32 @@ if (!formData.courseCode.trim()) newErrors.courseCode = "Course code is required
                 <option value="1-3">Intermediate (1-3 years)</option>
                 <option value="3-5">Advanced (3-5 years)</option>
                 <option value="5+">Expert (5+ years)</option>
-              </Select>
+</Select>
               {errors.experienceLevel && (
                 <p className="text-sm text-error-600">{errors.experienceLevel}</p>
               )}
             </div>
+
+            {/* Range Field */}
+            <Range
+              label="Range"
+              name="range_c"
+              value={formData.range_c}
+              onChange={handleChange}
+              error={errors.range_c}
+              min={0}
+              max={100}
+            />
+
+            {/* Tag Field */}
+            <Tag
+              label="Tag"
+              name="tag_c"
+              value={formData.tag_c}
+              onChange={handleChange}
+              error={errors.tag_c}
+              placeholder="Add tag..."
+            />
 
             {/* Boolean - Course Active Status */}
             <div className="space-y-3">
