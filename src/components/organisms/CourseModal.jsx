@@ -30,7 +30,8 @@ courseCode: "",
     specializations: [],
     experienceLevel: "",
     isActive: true,
-    topics: "",
+topics: "",
+    tag_c: "",
     deliveryMethods: [],
     difficulty: "",
     range_c: "",
@@ -63,7 +64,7 @@ setFormData({
         deliveryMethods: course.deliveryMethods ? course.deliveryMethods.split(',').filter(d => d.trim()) : [],
         difficulty: course.difficulty || "",
         range_c: course.range_c || "",
-        tag_c: course.tag_c || ""
+tag_c: course.Tags || course.tag_c || ""
       });
     } else {
 setFormData({
@@ -85,9 +86,10 @@ setFormData({
         specializations: [],
         experienceLevel: "",
         isActive: true,
-        topics: [],
+topics: [],
         deliveryMethods: [],
-        difficulty: ""
+        difficulty: "",
+        tag_c: ""
       });
     }
     setErrors({});
@@ -131,7 +133,7 @@ if (!formData.courseCode.trim()) newErrors.courseCode = "Course code is required
     if (formData.amount && isNaN(formData.amount)) newErrors.amount = "Valid amount required";
     if (!formData.difficulty.trim()) newErrors.difficulty = "Difficulty level is required";
     if (formData.range_c && !formData.range_c.includes('-')) newErrors.range_c = "Range must contain min and max values";
-    if (!formData.tag_c.trim()) newErrors.tag_c = "At least one tag is required";
+if (!formData.tag_c || !formData.tag_c.trim()) newErrors.tag_c = "At least one tag is required";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -155,11 +157,11 @@ course_code_c: formData.courseCode,
         website_c: formData.website,
         amount_c: formData.amount ? parseFloat(formData.amount) : null,
         specializations: formData.specializations.join(','),
-        topics: formData.topics,
+topics: formData.topics,
         deliveryMethods: formData.deliveryMethods.join(','),
         difficulty: formData.difficulty,
         range_c: formData.range_c,
-        tag_c: formData.tag_c
+        tag_c: formData.tag_c || ""
       };
       delete courseData.days;
       delete courseData.time;
