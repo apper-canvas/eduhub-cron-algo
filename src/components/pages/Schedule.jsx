@@ -39,9 +39,9 @@ const Schedule = () => {
   }, []);
 
   const getCoursesForTimeSlot = (day, timeSlot) => {
-    return courses.filter(course => 
-      course.schedule.days.includes(day) && 
-      course.schedule.time === timeSlot
+return courses.filter(course => 
+      course.schedule?.days?.includes(day) && 
+      course.schedule?.time === timeSlot
     );
   };
 
