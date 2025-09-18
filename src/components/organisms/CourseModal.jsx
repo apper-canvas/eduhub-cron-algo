@@ -83,36 +83,32 @@ const handleChange = (e) => {
     }
   };
 
-  const handleDayChange = (day) => {
+const handleDayChange = (day) => {
     setFormData(prev => ({
       ...prev,
-      days: prev.days.includes(day)
-        ? prev.days.filter(d => d !== day)
-        : [...prev.days, day]
+      schedule: prev.schedule.includes(day)
+        ? prev.schedule.replace(day, '').replace(/\s+/g, ' ').trim()
+        : `${prev.schedule} ${day}`.trim()
     }));
-    if (errors.days) {
-      setErrors(prev => ({ ...prev, days: "" }));
+    if (errors.schedule) {
+      setErrors(prev => ({ ...prev, schedule: "" }));
     }
   };
 
 const validateForm = () => {
     const newErrors = {};
-if (!formData.courseCode.trim()) newErrors.courseCode = "Course code is required";
+    if (!formData.courseCode.trim()) newErrors.courseCode = "Course code is required";
     if (!formData.title.trim()) newErrors.title = "Course title is required";
     if (!formData.credits || isNaN(formData.credits)) newErrors.credits = "Valid credits required";
     if (!formData.department.trim()) newErrors.department = "Department is required";
     if (!formData.capacity || isNaN(formData.capacity)) newErrors.capacity = "Valid capacity required";
     if (!formData.instructor.trim()) newErrors.instructor = "Instructor is required";
-    if (formData.days.length === 0) newErrors.days = "At least one day must be selected";
-    if (!formData.time.trim()) newErrors.time = "Time is required";
     if (!formData.phone.trim()) newErrors.phone = "Phone is required";
     if (!formData.email.trim()) newErrors.email = "Email is required";
     if (formData.email && !/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = "Valid email required";
     if (formData.website && !/^https?:\/\/.+\..+/.test(formData.website)) newErrors.website = "Valid website URL required";
     if (formData.amount && isNaN(formData.amount)) newErrors.amount = "Valid amount required";
-    if (!formData.difficulty.trim()) newErrors.difficulty = "Difficulty level is required";
-    if (formData.range_c && !formData.range_c.includes('-')) newErrors.range_c = "Range must contain min and max values";
-if (!formData.tag_c || !formData.tag_c.trim()) newErrors.tag_c = "Tags are required";
+    if (!formData.tag_c || !formData.tag_c.trim()) newErrors.tag_c = "Tags are required";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -139,8 +135,6 @@ const courseData = {
         amount_c: formData.amount ? parseFloat(formData.amount) : null,
         Tags: formData.tag_c
       };
-      delete courseData.days;
-      delete courseData.time;
       onSave(courseData);
     }
   };
